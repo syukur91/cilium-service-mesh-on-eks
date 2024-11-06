@@ -39,7 +39,7 @@ Apply complete! Resources: 65 added, 0 changed, 0 destroyed.
 
 Outputs:
 
-configure_kubectl = "aws eks --region us-west-2 update-kubeconfig --name terraform"
+configure_kubectl = "aws eks --region ap-southeast-3 update-kubeconfig --name terraform"
 ```
 
 It takes ~15 minutes for an EKS cluster creation process to complete. 
@@ -140,7 +140,7 @@ Sample Output:
 NAMESPACE     NAME                                TYPE           CLUSTER-IP       EXTERNAL-IP                                                                     PORT(S)                      AGE
 ...
 OUTPUT TRUNCATED
-kube-system   cilium-ingress                      LoadBalancer   172.20.6.189     k8s-kubesyst-ciliumin-849dd6c7c1-36d537f75e9357d8.elb.us-west-2.amazonaws.com   80:32741/TCP,443:30873/TCP   20m
+kube-system   cilium-ingress                      LoadBalancer   172.20.6.189     k8s-kubesyst-ciliumin-849dd6c7c1-36d537f75e9357d8.elb.ap-southeast-3.amazonaws.com   80:32741/TCP,443:30873/TCP   20m
 OUTPUT TRUNCATED
 ...
 ```
@@ -151,14 +151,14 @@ Since Cilium replaces `kube-proxy` you can delete it on the Amazon EKS cluster b
 
 ```
 currentdir=$(basename $PWD)
-aws eks delete-addon --cluster-name $currentdir --addon-name kube-proxy --region us-west-2
+aws eks delete-addon --cluster-name $currentdir --addon-name kube-proxy --region ap-southeast-3
 
 ```
 
 You can confirm the deletion by performing the following command. You should see only `coredns` and `vpc-cni` in the output. 
 
 ```
-aws eks list-addons --cluster-name  terraform --region us-west-2
+aws eks list-addons --cluster-name  terraform --region ap-southeast-3
 ```
 
 ### Step 4 - Deploy Product Catalog Application
@@ -272,7 +272,7 @@ echo "http://$CILIUM_INGRESS_URL"
 
 Sample Output
 ```
-http://k8s-kubesyst-ciliumin-1234567-1234567.elb.us-west-2.amazonaws.com
+http://k8s-kubesyst-ciliumin-1234567-1234567.elb.ap-southeast-3.amazonaws.com
 ```
 
 Access the application URL either using `curl` or a browser. You should see the following web page.
